@@ -1,1 +1,2 @@
 # MerkovTextGenerator
+Simple text generator
