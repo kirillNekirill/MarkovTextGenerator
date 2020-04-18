@@ -43,10 +43,11 @@ public:
 	//	generated word or END_TAG.
 	std::wstring GenRandWord(const std::list<std::wstring>& iPrev) const;
 
-	//Model's order
-	unsigned order;
+  unsigned order() const;
 
 private:
+  //Model's order
+  unsigned order_;
 	typedef std::unordered_map<std::wstring, int> dictogram;
 	std::unordered_map<std::wstring, dictogram> _wordsMap;
 };

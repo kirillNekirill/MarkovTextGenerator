@@ -10,19 +10,19 @@
 
 #define NEXT_DICTOGRAM_TAG L"*NEXT*"
 
-MarkovTextGen::MarkovTextGen(unsigned iOrder): order(iOrder)
+MarkovTextGen::MarkovTextGen(unsigned iOrder): order_(iOrder)
 {
 }
 
 bool MarkovTextGen::Update(const std::list<std::wstring>& iWords)
 {
-	if(iWords.size() < order)
+	if(iWords.size() < order_)
 		return false;
 	
 	std::wstring window;
 	unsigned i = 0;
 	auto wordsIt = iWords.begin();
-	while(i < order)
+	while(i < order_)
 	{
 		if(i != 0)
 			window.push_back(' ');
@@ -44,7 +44,7 @@ bool MarkovTextGen::Update(const std::list<std::wstring>& iWords)
 		if(!window.empty())
 			window.erase(0, 1);
 
-		if(order > 1)
+		if(order_ > 1)
 			window.push_back(' ');
 		window.append(*wordsIt);
 
@@ -58,7 +58,7 @@ bool MarkovTextGen::Update(const std::list<std::wstring>& iWords)
 
 std::wstring MarkovTextGen::GenRandWord(const std::list<std::wstring>& iPrev) const
 {
-	if(iPrev.size() != order)
+	if(iPrev.size() != order_)
 		return END_TAG;
 
 	std::wstring window;
@@ -116,8 +116,8 @@ bool MarkovTextGen::LoadFromFile(std::string iFileToRead)
 
 		if(currOrder == 0)
 			return false;
-		
-		order = currOrder;
+
+    order_ = currOrder;
 
 		auto currentDictogramIt = _wordsMap.end();
 
@@ -151,7 +151,7 @@ bool MarkovTextGen::LoadFromFile(std::string iFileToRead)
 				if(currOrder == 0)
 					return false;
 
-				if(currOrder != order)
+				if(currOrder != order_)
 					return false;
 
 				if(currentDictogramIt == _wordsMap.end())
@@ -193,4 +193,9 @@ bool MarkovTextGen::SaveToFile(std::string iFileToSave) const
 		return false;
 
 	return true;
+}
+
+unsigned MarkovTextGen::order() const
+{
+  return order_;
 }

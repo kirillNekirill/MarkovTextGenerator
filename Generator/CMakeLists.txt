@@ -1,2 +1,4 @@
 project (Generator)
-add_executable(Generator main.cpp ../MarkovTextGen.cpp)
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_link_libraries(${PROJECT_NAME} MarkovModel)
